@@ -1,24 +1,36 @@
 import React from 'react';
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import { Student, AppName } from './interfaces'
+import { DisplayData } from './DisplayData';
+import { studentList } from './data';
 
-function App() {
+function App({ name }: AppName) {
+  const [student, setStudent] = useState<Student | null>(null)
+
+  const addStudent = () => {
+    setStudent(
+      {
+        name: "Mark",
+        surname: "Zuckerberg",
+        level: "Postgraduate",
+        age: 20
+      }
+    )
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>{name}</h1>
+      <p><b>{student?.name} {student?.surname}</b></p>
+      {student?.level === "Undergraduate" &&
+        <p><b>Age: {student.age}</b></p>
+      }
+      <button onClick={addStudent}>Add Student</button>
+      <h3>List of students</h3>
+      <div>
+        <DisplayData items={studentList} />
+      </div>
     </div>
   );
 }
